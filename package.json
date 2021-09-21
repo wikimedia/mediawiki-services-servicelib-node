@@ -18,6 +18,8 @@
   "homepage": "https://github.com/nikkhn/servicelib-node#readme",
   "dependencies": {
     "bluebird": "^3.7.2",
-    "swagger-router": "^0.7.4"
+    "express": "^4.17.1",
+    "swagger-router": "^0.7.4",
+    "swagger-ui-dist": "^3.52.3"
   }
 }
