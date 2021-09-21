@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/nikkhn/servicelib-node/issues"
   },
-  "homepage": "https://github.com/nikkhn/servicelib-node#readme"
+  "homepage": "https://github.com/nikkhn/servicelib-node#readme",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "swagger-router": "^0.7.4"
+  }
 }
