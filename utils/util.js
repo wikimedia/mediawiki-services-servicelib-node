@@ -1,6 +1,6 @@
 'use strict';
 
-//const BBPromise = require('bluebird');
+const BBPromise = require('bluebird');
 //const preq = require('preq');
 const express = require('express');
 //const uuidv1 = require('uuid/v1');

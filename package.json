@@ -18,7 +18,10 @@
   "homepage": "https://github.com/nikkhn/servicelib-node#readme",
   "dependencies": {
     "bluebird": "^3.7.2",
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
     "express": "^4.17.1",
+    "save-dev": "^0.0.1-security",
     "swagger-router": "^0.7.4",
     "swagger-ui-dist": "^3.52.3"
   }

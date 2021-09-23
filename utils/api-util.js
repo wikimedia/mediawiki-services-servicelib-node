@@ -1,6 +1,6 @@
 'use strict';
 
-//const BBPromise = require('bluebird');
+const BBPromise = require('bluebird');
 const sUtil = require('../../service-scaffold-node/lib/util');
 //const Template = require('swagger-router').Template;
 const HTTPError = sUtil.HTTPError;

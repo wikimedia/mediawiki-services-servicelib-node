@@ -3,7 +3,7 @@
 const BBPromise = require('bluebird');
 const fs = BBPromise.promisifyAll(require('fs'));
 const path = require('path');
-const HTTPError = require('../util').HTTPError;
+const HTTPError = require('./util').HTTPError;
 
 // Swagger-ui-dist helpfully exporting the absolute path of its dist directory
 const docRoot = `${require('swagger-ui-dist').getAbsoluteFSPath()}/`;
