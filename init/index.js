@@ -1,12 +1,14 @@
+'use strict';
+
 const http = require('http');
 const BBPromise = require('bluebird');
 const express = require('express');
 const compression = require('compression');
 const bodyParser = require('body-parser');
 const fs = BBPromise.promisifyAll(require('fs'));
-const sUtil = require('./util');
-const apiUtil = require('./api-util');
-const packageInfo = require('../package.json');
+const sUtil = require('../util');
+const apiUtil = require('../api-util');
+const packageInfo = require('./package.json');
 const yaml = require('js-yaml');
 const addShutdown = require('http-shutdown');
 const path = require('path');
@@ -17,7 +19,7 @@ const path = require('path');
  * @param {Object} options the options to initialise the app with
  * @return {bluebird} the promise resolving to the app object
  */
- function initApp(options) {
+function initApp(options) {
 
     // the main application object
     const app = express();
@@ -128,7 +130,6 @@ const path = require('path');
 
 }
 
-
 /**
  * Loads all routes declared in routes/ into the app
  *
@@ -136,7 +137,7 @@ const path = require('path');
  * @param {string} dir routes folder
  * @return {bluebird} a promise resolving to the app object
  */
- function loadRoutes(app, dir) {
+function loadRoutes(app, dir) {
 
     // recursively load routes from .js files under routes/
     return fs.readdirAsync(dir).map((fname) => {
@@ -189,7 +190,7 @@ const path = require('path');
  * @param {Application} app the app object to use in the service
  * @return {bluebird} a promise creating the web server
  */
- function createServer(app) {
+function createServer(app) {
 
     // return a promise which creates an HTTP server,
     // attaches the app to it, and starts accepting
