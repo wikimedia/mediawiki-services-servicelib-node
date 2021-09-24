@@ -1,10 +1,10 @@
 'use strict';
 
 const BBPromise = require('bluebird');
-//const preq = require('preq');
+const preq = require('preq');
 const express = require('express');
 //const uuidv1 = require('uuid/v1');
-//const bunyan = require('bunyan');
+const bunyan = require('bunyan');
 
 /**
  * Error instance wrapping HTTP error responses
