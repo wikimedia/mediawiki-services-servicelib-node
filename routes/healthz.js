@@ -1,37 +1,23 @@
 'use strict';
 
-const sUtil = require('../utils/util');
+const packageInfo = require('../package.json');
 
-/**
- * The main router object
- */
-const router = sUtil.router();
-
+app.info = packageInfo;
 /**
  * GET /
  * Gets some basic info
  */
 
-router.get('/', (req, res) => {
+const healthz = () => {
+    return (req, res) => {
+        res.json({
+            version: app.info.version,
+            build_date: '',
+            build_host: '',
+        });
+    }
 
-    // async returns
-    res.json({
-        version: '',
-        build_date: '',
-        build_host: '',
-    });
-});
-
-/**
- * GET /version
- * Gets the healthz version
- */
-router.get('/version', (req, res) => {
-
-    // simple return
-    res.json({ version: ''});
-
-});
+}
 
 module.exports = (appObj) => {
 
