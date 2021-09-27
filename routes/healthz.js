@@ -2,7 +2,7 @@
 
 const packageInfo = require('../package.json');
 
-app.info = packageInfo;
+app.healthz = packageInfo;
 /**
  * GET /
  * Gets some basic info
@@ -11,7 +11,7 @@ app.info = packageInfo;
 const healthz = () => {
     return (req, res) => {
         res.json({
-            version: app.info.version,
+            version: app.healthz.version,
             build_date: '',
             build_host: '',
         });
