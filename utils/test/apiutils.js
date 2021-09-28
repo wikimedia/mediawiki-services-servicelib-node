@@ -1,11 +1,10 @@
 'use strict'
 
-const apiUtils = require('../utils/api-util')
-
-const { expect } = require("chai");
+const apiUtils = require('../api-util')
 const chai = require("chai");
+const chaiAsPromised = require('chai-as-promised');
 
-var chaiAsPromised = require('chai-as-promised');
+const { expect } = chai;
 chai.use(chaiAsPromised);
 
 describe("test", function() {

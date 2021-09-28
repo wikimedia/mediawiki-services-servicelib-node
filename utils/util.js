@@ -3,7 +3,7 @@
 const BBPromise = require('bluebird');
 const preq = require('preq');
 const express = require('express');
-//const uuidv1 = require('uuid/v1');
+const uuidv1 = require('uuid/v1');
 const bunyan = require('bunyan');
 
 /**
