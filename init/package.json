@@ -8,7 +8,7 @@
 		"http-shutdown": "^1.2.1",
 		"js-yaml": "^3.13.1",
 		"service-runner": "^2.7.1",
-		"servicelib-node": "github:nikkhn/servicelib-node#0bd035612c781b27f95fcc7bee74af4a3a4b656b",
+		"utils": "file:../utils",
 		"uuid": "^3.3.2"
 	}
 }

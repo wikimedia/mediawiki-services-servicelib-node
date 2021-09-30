@@ -6,9 +6,8 @@ const express = require('express');
 const compression = require('compression');
 const bodyParser = require('body-parser');
 const fs = BBPromise.promisifyAll(require('fs'));
-const sUtil = require('../util');
-const apiUtil = require('../api-util');
-const packageInfo = require('./package.json');
+const sUtil = require('utils/util');
+const apiUtil = require('utils/api-util');
 const yaml = require('js-yaml');
 const addShutdown = require('http-shutdown');
 const path = require('path');
@@ -19,7 +18,7 @@ const path = require('path');
  * @param {Object} options the options to initialise the app with
  * @return {bluebird} the promise resolving to the app object
  */
-function initApp(options) {
+function initApp(options, packageInfo) {
 
     // the main application object
     const app = express();
