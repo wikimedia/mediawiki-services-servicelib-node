@@ -1,0 +1,6 @@
+pipelines:
+  spec:
+    directory: spec
+    stages:
+      - name: test
+      - name: production
