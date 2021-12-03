@@ -1,5 +1,5 @@
 {
-	"name": "spec",
+	"name": "@wikimedia/servicelib-node-spec",
 	"version": "1.0.0",
 	"description": "Generate a single OpenAPI v3 spec from multiple sources",
 	"main": "index.js",

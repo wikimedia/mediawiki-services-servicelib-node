@@ -1,5 +1,5 @@
 {
-  "name": "utils",
+  "name": "@wikimedia/servicelib-node-utils",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,5 +15,10 @@
     "fs": "^0.0.1-security",
     "path": "^0.12.7",
     "preq": "^0.5.14"
-  }
+  },
+  "repository": {
+		"type": "git",
+		"url": "https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/services/servicelib-node/",
+		"directory": "utils/"
+	}
 }
