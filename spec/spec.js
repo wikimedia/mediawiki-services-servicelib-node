@@ -4,6 +4,7 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const yamljs = require('yamljs');
 const { resolveRefs } = require('json-refs');
 const fs = require('fs');
+const os = require('os');
 
 /**
  * Add additional fields to the OpenAPI spec that are not present in package.json
@@ -108,7 +109,7 @@ const writeSpec = (spec, path) => {
 		throw new Error('Provided path to write spec to should have .json extension');
 	}
 	try {
-		fs.writeFileSync(path, JSON.stringify(spec));
+		fs.writeFileSync(path, JSON.stringify(spec, null, '\t') + os.EOL);
 	} catch (error) {
 		throw new Error(`Failed to write OpenAPI spec to ${path}`);
 	}
