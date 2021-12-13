@@ -1,10 +1,10 @@
 {
 	"name": "@wikimedia/servicelib-node-spec",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Generate a single OpenAPI v3 spec from multiple sources",
 	"main": "index.js",
 	"bin": {
-		"servicelib-spec": "./index.js"
+		"servicelib-spec": "index.js"
 	},
 	"scripts": {
 		"test": "npm run lint && mocha ./test",
