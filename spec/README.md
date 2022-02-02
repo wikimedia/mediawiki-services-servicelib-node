@@ -38,13 +38,12 @@ servicelib-spec -- <info-path> <routes-path> [spec-path]
 
 <b>info-path</b>
 
-Path to file where general service info is. Must include `name`, `description`, and `version` values.
-Typically is the relative path to `package.json`. However, you may provide a different `.json` config file to take service info values from.
+Path to JSON file used to populate the Open API [Info object](https://swagger.io/specification/#info-object). Must include `name`, `description`, and `version` values. Typically this should be the relative path to `package.json`. However, you may provide a path to a different `.json` config file if there are additional values that are not apart of your `package.json` that you would like included in the Info object.
 
 <b>routes-path</b>
 
 Path to directory with route files containing OpenAPI JSDoc yaml.
-Example: ./routes/*.js will search all Javascript files for `@openapi` annotations.
+Example: `./routes/*.js` will search all JavaScript files for `@openapi` annotations.
 
 #### Optional
 
