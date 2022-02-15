@@ -2,7 +2,7 @@
 
 const swaggerUi = require('./swagger-ui');
 
-const getSpecRoutHandler = ( spec ) => {
+const getSpecRouteHandler = ( spec ) => {
 	return  (req, res, next) => {
 		if ({}.hasOwnProperty.call(req.query || {}, 'spec')) {
 			res.json(spec);
@@ -12,7 +12,7 @@ const getSpecRoutHandler = ( spec ) => {
 	};
 };
 
-const getSwaggerUiRoutHandler = ( app ) => {
+const getSwaggerUiRouteHandler = ( app ) => {
 	return  (req, res, next) => {
 		if ({}.hasOwnProperty.call(req.query || {}, 'doc')) {
 			return swaggerUi.processRequest(app, req, res);
@@ -22,7 +22,18 @@ const getSwaggerUiRoutHandler = ( app ) => {
 	};
 };
 
+const getHealthZRouteHandler = ( app, checkStatus ) => {
+	return ( req, res ) => {
+		res.json({
+			name: app.info.name,
+			version: app.info.version,
+			status: checkStatus()
+		});
+	}
+}
+
 module.exports = {
-	getSpecRoutHandler,
-	getSwaggerUiRoutHandler
+	getSpecRouteHandler,
+	getSwaggerUiRouteHandler,
+	getHealthZRouteHandler
 }
