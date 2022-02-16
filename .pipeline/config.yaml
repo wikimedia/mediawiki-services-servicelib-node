@@ -4,3 +4,18 @@ pipelines:
     stages:
       - name: test
       - name: production
+  init:
+    directory: init
+    stages:
+      - name: test
+      - name: production
+  utils:
+    directory: utils
+    stages:
+      - name: test
+      - name: production
+  examples:
+    directory: examples
+    stages:
+      - name: test
+      - name: production
