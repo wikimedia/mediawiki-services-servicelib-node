@@ -165,6 +165,11 @@ function loadRoutes(app, dir) {
             if (!route.skip_domain) {
                 route.path = `/:domain/v${route.api_version}${route.path}`;
             }
+            // log all route handlers
+            route.router.stack.forEach((routerLayer) => {
+                const path = routerLayer.route.path.slice(1);
+                app.logger.log( 'info', `activating route ${route.path}${path}` );
+            });
             // wrap the route handlers with Promise.try() blocks
             wrapRouteHandlers(route, app);
             // all good, use that route

@@ -1,0 +1,15 @@
+{
+	"name": "@wikimedia/servicelib-node-examples",
+	"main": "index.js",
+	"version": "1.0.0",
+	"dependencies": {
+		"bluebird": "^3.5.5",
+		"domino": "^2.1.3",
+		"@wikimedia/servicelib-node-utils": "^1.0.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/services/servicelib-node/",
+		"directory": "examples/"
+	}
+}
