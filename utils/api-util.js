@@ -21,7 +21,8 @@ function mwApiGet(req, query, headers) {
         formatversion: 2
     }, query);
 
-    const request = app.mwapi_tpl.expand({
+    const tpl = getActionApiTemplate( app );
+    const request = tpl.expand({
         request: {
             params: { domain: req.params.domain },
             headers: req.headers,
@@ -83,16 +84,20 @@ function restApiGet(req, path, restReq) {
     restReq.params.path = restReq.params.path[0] === '/' ?
         restReq.params.path.slice(1) : restReq.params.path;
 
-    return req.issueRequest(app.restbase_tpl.expand({ request: restReq }));
+    const tpl = getRestbaseTemplate( app );
+    return req.issueRequest(tpl.expand({ request: restReq }));
 
 }
 
 /**
- * Sets up the request templates for MW and RESTBase API requests
+ * Gets a Template for MW action API calls
  *
  * @param {!Application} app the application object
  */
-function setupApiTemplates(app) {
+function getActionApiTemplate(app) {
+    if ( app.mwapi_tpl ) {
+        return app.mwapi_tpl;
+    }
 
     // set up the MW API request template
     if (!app.conf.mwapi_req) {
@@ -104,6 +109,18 @@ function setupApiTemplates(app) {
         };
     }
     app.mwapi_tpl = new Template(app.conf.mwapi_req);
+    return app.mwapi_tpl;
+}
+
+/**
+ * Sets up the request templates for MW and RESTBase API requests
+ *
+ * @param {!Application} app the application object
+ */
+function getRestbaseTemplate(app) {
+    if ( app.restbase_tpl ) {
+        return app.restbase_tpl;
+    }
 
     // set up the RESTBase request template
     if (!app.conf.restbase_req) {
@@ -116,11 +133,10 @@ function setupApiTemplates(app) {
         };
     }
     app.restbase_tpl = new Template(app.conf.restbase_req);
-
+    return app.restbase_tpl;
 }
 
 module.exports = {
     mwApiGet,
-    restApiGet,
-    setupApiTemplates
+    restApiGet
 };
