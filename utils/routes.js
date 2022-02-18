@@ -12,9 +12,11 @@ const getSpecRouteHandler = ( spec ) => {
 	};
 };
 
-const getSwaggerUiRouteHandler = ( app ) => {
+const getSwaggerUiRouteHandler = ( app, asDefault = true ) => {
 	return  (req, res, next) => {
-		if ({}.hasOwnProperty.call(req.query || {}, 'doc')) {
+		if ( asDefault && req.accepts('text/html') && Object.entries(req.query).length === 0 ) {
+			return swaggerUi.processRequest(app, req, res);
+		} else if ({}.hasOwnProperty.call(req.query || {}, 'doc')) {
 			return swaggerUi.processRequest(app, req, res);
 		} else {
 			next();
