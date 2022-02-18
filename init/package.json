@@ -9,6 +9,7 @@
 		"express": "^4.17.2",
 		"http-shutdown": "^1.2.1",
 		"js-yaml": "^3.13.1",
+		"preq": "^0.5.14",
 		"service-runner": "^2.7.1",
 		"swagger-ui-dist": "^3.22.3",
 		"utils": "file:../utils",
