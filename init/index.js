@@ -6,7 +6,7 @@ const express = require('express');
 const compression = require('compression');
 const bodyParser = require('body-parser');
 const fs = BBPromise.promisifyAll(require('fs'));
-const sUtil = require('utils/util');
+const logging = require('./logging');
 const yaml = require('js-yaml');
 const addShutdown = require('http-shutdown');
 const path = require('path');
@@ -15,7 +15,7 @@ const path = require('path');
  * Creates an express app and initialises it
  *
  * @param {Object} options the options to initialise the app with
- * @return {bluebird} the promise resolving to the app object
+ * @return {BBPromise} the promise resolving to the app object
  */
 function initApp(options, packageInfo) {
 
@@ -103,7 +103,7 @@ function initApp(options, packageInfo) {
             res.header('x-frame-options', 'SAMEORIGIN');
             res.header('content-security-policy', app.conf.csp);
         }
-        sUtil.initAndLogRequest(req, app);
+        logging.initAndLogRequest(req, app);
         next();
     });
 
@@ -130,7 +130,7 @@ function initApp(options, packageInfo) {
  *
  * @param {Application} app the application object to load routes into
  * @param {string} dir routes folder
- * @return {bluebird} a promise resolving to the app object
+ * @return {BBPromise} a promise resolving to the app object
  */
 function loadRoutes(app, dir) {
 
@@ -166,15 +166,64 @@ function loadRoutes(app, dir) {
                 route.path = `/:domain/v${route.api_version}${route.path}`;
             }
             // wrap the route handlers with Promise.try() blocks
-            sUtil.wrapRouteHandlers(route, app);
+            wrapRouteHandlers(route, app);
             // all good, use that route
             app.use(route.path, route.router);
         });
     }).then(() => {
         // catch errors
-        sUtil.setErrorHandler(app);
+        logging.setErrorHandler(app);
         // route loading is now complete, return the app object
         return BBPromise.resolve(app);
+    });
+
+}
+
+/**
+ * Wraps all of the given router's handler functions with
+ * promised try blocks so as to allow catching all errors,
+ * regardless of whether a handler returns/uses promises
+ * or not.
+ *
+ * @param {!Object} route the object containing the router and path to bind it to
+ * @param {!Application} app the application object
+ */
+function wrapRouteHandlers(route, app) {
+
+    route.router.stack.forEach((routerLayer) => {
+        const path = (route.path + routerLayer.route.path.slice(1))
+          .replace(/\/:/g, '/--')
+          .replace(/^\//, '')
+          .replace(/[/?]+$/, '');
+        routerLayer.route.stack.forEach((layer) => {
+            const origHandler = layer.handle;
+            const metric = app.metrics.makeMetric({
+                type: 'Histogram',
+                name: 'router',
+                prometheus: {
+                    name: 'express_router_request_duration_seconds',
+                    help: 'request duration handled by router in seconds',
+                    staticLabels: app.metrics.getServiceLabel(),
+                    buckets: [0.01, 0.05, 0.1, 0.3, 1]
+                },
+                labels: {
+                    names: ['path', 'method', 'status'],
+                    omitLabelNames: true
+                }
+            });
+            layer.handle = (req, res, next) => {
+                const startTime = Date.now();
+                BBPromise.try(() => origHandler(req, res, next))
+                  .catch(next)
+                  .finally(() => {
+                      let statusCode = parseInt(res.statusCode, 10) || 500;
+                      if (statusCode < 100 || statusCode > 599) {
+                          statusCode = 500;
+                      }
+                      metric.endTiming(startTime, [path || 'root', req.method, statusCode]);
+                  });
+            };
+        });
     });
 
 }
@@ -183,7 +232,7 @@ function loadRoutes(app, dir) {
  * Creates and start the service's web server
  *
  * @param {Application} app the app object to use in the service
- * @return {bluebird} a promise creating the web server
+ * @return {BBPromise} a promise creating the web server
  */
 function createServer(app) {
 
