@@ -176,7 +176,21 @@ function initAndLogRequest(req, app) {
             'x-request-id': req.context.reqId
         });
         req.logger.log('trace/req', { msg: 'Outgoing request', out_request: request });
-        return preq(request);
+
+        if ( app.fakeRequestHandler ) {
+            // Intercept outgoing requests for testing
+            return new BBPromise( (resolve, reject) => {
+                const resp = app.fakeRequestHandler(request);
+
+                if ( resp.status < 400 ) {
+                    return resolve(resp);
+                } else {
+                    return reject(new HTTPError(resp));
+                }
+            } );
+        } else {
+            return preq(request);
+        }
     };
     req.logger.log('trace/req', { msg: 'Incoming request' });
 }
