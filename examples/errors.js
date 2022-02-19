@@ -84,7 +84,7 @@ module.exports = (router, app) => {
 
         // pretend to read a token file
         // again, note the return statement
-        return fs.readFileAsync(`${__dirname}/../static/index.html`)
+        return fs.readFileAsync(`${__dirname}/README.md`)
           // and pretend to compare it with what the user sent
           .then((token) => {
               if (!req.params || req.params.token !== token) {
