@@ -45,7 +45,7 @@ const generateInfoObj = (packageObject) => {
  * @param {Object} serviceInfo package.json metadata
  * @param {Array} routes Path(s) to files and/or directories with function comments to
  * insert in the openAPI spec. Paths may contain regex.
- * @return {Object} OpenAPI spec with service info and unresolved route defintions
+ * @return {Object} OpenAPI spec with service info and unresolved route definitions
  */
 const getBaseSpec = (serviceInfo, routes) => {
 	const baseObject = generateInfoObj(serviceInfo);
