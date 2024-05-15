@@ -1,8 +1,7 @@
 {
 	"extends": [
 		"wikimedia/server",
-		"wikimedia/mocha",
-		"wikimedia/jsdoc"
+		"wikimedia/mocha"
 	],
 	"rules": {
 		"array-bracket-spacing": "off",
